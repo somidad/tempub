@@ -1,5 +1,37 @@
+:root {
+  --floating-action-buttons-spacing: 1rem;
+  --panel-background-color: #f0f0f0;
+  --panel-handle-side-length: 2.5rem;
+}
+
 .floating-action-buttons {
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
+  z-index: 2000;
+  right: var(--floating-action-buttons-spacing);
+  bottom: var(--floating-action-buttons-spacing);
+}
+
+#panel {
+  position: fixed;
+  z-index: 3000;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 100vw;
+  z-index: 999999999;
+  background-color: var(--panel-background-color);
+  transition: left 0.25s;
+}
+
+#panel.open {
+  left: calc(2 * var(--panel-handle-side-length));
+}
+
+#panel-handle {
+  position: relative;
+  width: var(--panel-handle-side-length);
+  height: var(--panel-handle-side-length);
+  left: calc(-1 * var(--panel-handle-side-length));
+  bottom: 0rem;
+  background-color: var(--panel-background-color);
 }

@@ -2,10 +2,11 @@ import "./App.css";
 import "bulma/css/bulma.min.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { createRef } from "react";
+import { createRef, useState } from "react";
 
 function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
+  const [isPanelOpen, setPanelOpen] = useState(false);
 
   const handleChange = () => {
     if (!refEditor.current) {
@@ -19,8 +20,11 @@ function App() {
 
   return (
     <div className="App">
-      <div className="floating-action-buttons">
-        <button>Save</button>
+      <div className="floating-action-buttons buttons">
+        <button className="button" onClick={() => setPanelOpen(true)}>
+          Publish
+        </button>
+        <button className="button">Save</button>
       </div>
       <div className="content">
         <CKEditor
@@ -93,6 +97,10 @@ function App() {
           ref={refEditor}
           onChange={handleChange}
         />
+      </div>
+      <div id="panel" className={isPanelOpen ? "open" : ""}>
+        <div id="panel-handle" onClick={() => setPanelOpen(!isPanelOpen)}></div>
+        <div></div>
       </div>
     </div>
   );
