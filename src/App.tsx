@@ -18,6 +18,8 @@ function App() {
 
   return (
     <div className="App">
+      <div className="floating-action-buttons">
+        <button>Save</button>
       </div>
       <CKEditor
         editor={ClassicEditor}
