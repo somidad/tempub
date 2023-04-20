@@ -8,6 +8,13 @@ function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
   const [isPanelOpen, setPanelOpen] = useState(false);
 
+  const clearEditor = () => {
+    if (!refEditor.current) {
+      return;
+    }
+    refEditor.current.editor?.data?.set("");
+  };
+
   const handleChange = () => {
     if (!refEditor.current) {
       return;
@@ -21,6 +28,9 @@ function App() {
   return (
     <div className="App">
       <div className="floating-action-buttons buttons">
+        <button className="button" onClick={clearEditor}>
+          New
+        </button>
         <button className="button" onClick={() => setPanelOpen(true)}>
           Publish
         </button>
