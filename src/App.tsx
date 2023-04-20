@@ -31,10 +31,12 @@ function App() {
         <button className="button" onClick={clearEditor}>
           New
         </button>
+        <button className="button">Load</button>
+        <button className="button">Save</button>
+        <button className="button">Info</button>
         <button className="button" onClick={() => setPanelOpen(true)}>
           Publish
         </button>
-        <button className="button">Save</button>
       </div>
       <div className="content">
         <CKEditor
