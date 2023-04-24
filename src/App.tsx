@@ -134,7 +134,12 @@ function App() {
                   </ul>
                 </div>
                 <div style={{ flexGrow: "1" }}>
-                  {renderList[keyIndex]?.rendered}
+                  <div
+                    className="content"
+                    dangerouslySetInnerHTML={{
+                      __html: renderList[keyIndex]?.rendered,
+                    }}
+                  />
                 </div>
               </div>
             </div>
