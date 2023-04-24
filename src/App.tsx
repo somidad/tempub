@@ -20,6 +20,8 @@ const KEY = "key";
 
 function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
+  const [envList, setEnvList] = useState<any[]>([
+  ]);
   const [renderList, setRenderList] = useState<RenderResult[]>([]);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.Editing
