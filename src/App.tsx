@@ -94,9 +94,27 @@ function App() {
           </div>
         )}
         {editorState === EditorState.Displaying && (
-          <div className="modal-card">
-            <div className="modal-card-head"></div>
-            <div className="modal-card-body"></div>
+          <div
+            className="modal-card"
+            style={{
+              width: "unset",
+              minWidth: "640px",
+              maxWidth: "calc(100vw - 40px)",
+            }}
+          >
+            <div className="modal-card-head">
+              <div className="modal-card-title">Proofreading</div>
+            </div>
+            <div className="modal-card-body">
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div className="menu">
+                  <ul className="menu-list">
+                  </ul>
+                </div>
+                <div style={{ flexGrow: "1" }}>
+                </div>
+              </div>
+            </div>
             <div className="modal-card-foot"></div>
           </div>
         )}
