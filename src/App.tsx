@@ -134,7 +134,7 @@ function App() {
                 </div>
                 <div style={{ flexGrow: "1" }}>
                   <div
-                    className="content"
+                    className="box content"
                     dangerouslySetInnerHTML={{
                       __html: renderList[keyIndex]?.rendered,
                     }}
