@@ -109,9 +109,8 @@ function App() {
           <div
             className="modal-card"
             style={{
-              width: "unset",
-              minWidth: "640px",
-              maxWidth: "calc(100vw - 40px)",
+              width: "calc(100vw - 40px)",
+              height: "calc(100vh - 40px)",
             }}
           >
             <div className="modal-card-head">
