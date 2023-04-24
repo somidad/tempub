@@ -26,14 +26,16 @@ function App() {
 
   return (
     <div className="App">
-      <div className="floating-action-buttons buttons">
-        <button className="button" onClick={clearEditor}>
-          New
-        </button>
-        <button className="button">Load</button>
-        <button className="button">Save</button>
-        <button className="button">Info</button>
-        <button className="button">Publish</button>
+      <div className="navbar">
+        <div className="navbar-menu">
+          <div className="navbar-start">
+            <a className="navbar-item" onClick={clearEditor}>New</a>
+            <a className="navbar-item">Load</a>
+            <a className="navbar-item">Save</a>
+            <a className="navbar-item">Info</a>
+            <a className="navbar-item">Publish</a>
+          </div>
+        </div>
       </div>
       <div className="content">
         <CKEditor
