@@ -6,7 +6,6 @@ import { createRef, useState } from "react";
 
 function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
-  const [isPanelOpen, setPanelOpen] = useState(false);
 
   const clearEditor = () => {
     if (!refEditor.current) {
@@ -34,9 +33,7 @@ function App() {
         <button className="button">Load</button>
         <button className="button">Save</button>
         <button className="button">Info</button>
-        <button className="button" onClick={() => setPanelOpen(true)}>
-          Publish
-        </button>
+        <button className="button">Publish</button>
       </div>
       <div className="content">
         <CKEditor
@@ -109,10 +106,6 @@ function App() {
           ref={refEditor}
           onChange={handleChange}
         />
-      </div>
-      <div id="panel" className={isPanelOpen ? "open" : ""}>
-        <div id="panel-handle" onClick={() => setPanelOpen(!isPanelOpen)}></div>
-        <div></div>
       </div>
     </div>
   );
