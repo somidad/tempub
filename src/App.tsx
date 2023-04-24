@@ -47,7 +47,7 @@ function App() {
 
     const renderList: RenderResult[] = [];
     envList.forEach((env) => {
-      const rendered = templateFunction(envList[0]);
+      const rendered = templateFunction(env);
       renderList.push({ [KEY]: env[KEY], rendered });
     });
     setRenderList(renderList);
