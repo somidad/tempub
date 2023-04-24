@@ -1,6 +1,12 @@
 import type { EditorConfig } from "@ckeditor/ckeditor5-core";
 
 const editorConfig: EditorConfig = {
+  typing: {
+    transformations: {
+      include: [],
+      remove: ["quotes"],
+    },
+  },
   toolbar: [
     "heading",
     "|",
