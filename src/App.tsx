@@ -29,7 +29,9 @@ function App() {
       <div className="navbar">
         <div className="navbar-menu">
           <div className="navbar-start">
-            <a className="navbar-item" onClick={clearEditor}>New</a>
+            <a className="navbar-item" onClick={clearEditor}>
+              New
+            </a>
             <a className="navbar-item">Load</a>
             <a className="navbar-item">Save</a>
             <a className="navbar-item">Info</a>
