@@ -74,6 +74,15 @@ function App() {
 
   const isModalActive = editorState !== EditorState.Editing ? "is-active" : "";
 
+  const matchedKeysList = renderList.map((render) => {
+    const matchedKeys = renderList
+      .filter(
+        (toFilter) =>
+          toFilter[KEY] !== render[KEY] && toFilter.rendered === render.rendered
+      )
+      .map((toMap) => toMap[KEY]);
+    return matchedKeys;
+  });
   return (
     <div className="App">
       <div className="navbar">
@@ -133,6 +142,9 @@ function App() {
                   </ul>
                 </div>
                 <div style={{ flexGrow: "1" }}>
+                  <div className="tags">
+                    Matched keys: {matchedKeysList[keyIndex]?.join(", ")}
+                  </div>
                   <div
                     className="box content"
                     dangerouslySetInnerHTML={{
