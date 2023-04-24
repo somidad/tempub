@@ -10,10 +10,10 @@ function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
 
   const clearEditor = () => {
-    if (!refEditor.current) {
+    if (!refEditor.current?.editor?.data) {
       return;
     }
-    refEditor.current.editor?.data?.set("");
+    refEditor.current.editor.data.set("");
   };
 
   const publish = () => {
