@@ -5,9 +5,16 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { createRef, useState } from "react";
 import editorConfig from "./editorConfig";
 
+type RenderResult = {
+  [KEY]: string;
+  rendered: string;
+};
+
+const KEY = "key";
 
 function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
+  const [renderList, setRenderList] = useState<RenderResult[]>([]);
 
   const clearEditor = () => {
     if (!refEditor.current?.editor?.data) {
@@ -22,6 +29,13 @@ function App() {
     }
     const template = refEditor.current.editor.data.get();
     const templateFunction = dot.template(template);
+
+    const renderList: RenderResult[] = [];
+    envList.forEach((env) => {
+      const rendered = templateFunction(envList[0]);
+      renderList.push({ [KEY]: env[KEY], rendered });
+    });
+    setRenderList(renderList);
   };
 
   return (
