@@ -16,14 +16,12 @@ function App() {
     refEditor.current.editor?.data?.set("");
   };
 
-  const handleChange = () => {
-    if (!refEditor.current) {
+  const publish = () => {
+    if (!refEditor.current?.editor?.data) {
       return;
     }
-    console.log(refEditor.current.editor?.data?.get());
-    console.log(
-      Array.from(refEditor.current.editor?.ui.componentFactory.names() ?? [])
-    );
+    const template = refEditor.current.editor.data.get();
+    const templateFunction = dot.template(template);
   };
 
   return (
@@ -37,7 +35,9 @@ function App() {
             <a className="navbar-item">Load</a>
             <a className="navbar-item">Save</a>
             <a className="navbar-item">Info</a>
-            <a className="navbar-item">Publish</a>
+            <a className="navbar-item" onClick={publish}>
+              Publish
+            </a>
           </div>
         </div>
       </div>
@@ -46,7 +46,6 @@ function App() {
           editor={ClassicEditor}
           config={editorConfig}
           ref={refEditor}
-          onChange={handleChange}
         />
       </div>
     </div>
