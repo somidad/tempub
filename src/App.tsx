@@ -3,6 +3,7 @@ import "bulma/css/bulma.min.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { createRef, useState } from "react";
+import dot from "dot";
 import editorConfig from "./editorConfig";
 
 enum EditorState {
@@ -16,7 +17,9 @@ type RenderResult = {
   rendered: string;
 };
 
+// TODO: Make these configurable
 const KEY = "key";
+dot.templateSettings.varname = "data";
 
 function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
