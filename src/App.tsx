@@ -5,6 +5,12 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { createRef, useState } from "react";
 import editorConfig from "./editorConfig";
 
+enum EditorState {
+  Editing,
+  Publishing,
+  Displaying,
+}
+
 type RenderResult = {
   [KEY]: string;
   rendered: string;
@@ -15,6 +21,9 @@ const KEY = "key";
 function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
   const [renderList, setRenderList] = useState<RenderResult[]>([]);
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.Editing
+  );
 
   const clearEditor = () => {
     if (!refEditor.current?.editor?.data) {
@@ -27,6 +36,7 @@ function App() {
     if (!refEditor.current?.editor?.data) {
       return;
     }
+    setEditorState(EditorState.Publishing);
     const template = refEditor.current.editor.data.get();
     const templateFunction = dot.template(template);
 
@@ -36,7 +46,16 @@ function App() {
       renderList.push({ [KEY]: env[KEY], rendered });
     });
     setRenderList(renderList);
+    setEditorState(EditorState.Displaying);
   };
+
+  const tryCloseModal = () => {
+    if (editorState === EditorState.Displaying) {
+      setEditorState(EditorState.Editing);
+    }
+  };
+
+  const isModalActive = editorState !== EditorState.Editing ? "is-active" : "";
 
   return (
     <div className="App">
@@ -61,6 +80,21 @@ function App() {
           config={editorConfig}
           ref={refEditor}
         />
+      </div>
+      <div className={`modal ${isModalActive}`}>
+        <div className="modal-background" onClick={tryCloseModal}></div>
+        {editorState === EditorState.Publishing && (
+          <div className="modal-content">
+            <progress className="progress" max="100"></progress>
+          </div>
+        )}
+        {editorState === EditorState.Displaying && (
+          <div className="modal-card">
+            <div className="modal-card-head"></div>
+            <div className="modal-card-body"></div>
+            <div className="modal-card-foot"></div>
+          </div>
+        )}
       </div>
     </div>
   );
