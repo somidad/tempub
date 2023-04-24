@@ -24,11 +24,22 @@ dot.templateSettings.varname = "data";
 function App() {
   const refEditor = createRef<CKEditor<ClassicEditor>>();
   const [envList, setEnvList] = useState<any[]>([
+    { key: "Key 0" },
+    { key: "Key 1" },
+    { key: "Key 2" },
+    { key: "Key 3" },
+    { key: "Key 4" },
+    { key: "Key 5" },
+    { key: "Key 6" },
+    { key: "Key 7" },
+    { key: "Key 8" },
+    { key: "Key 9" },
   ]);
   const [renderList, setRenderList] = useState<RenderResult[]>([]);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.Editing
   );
+  const [keyIndex, setKeyIndex] = useState(-1);
 
   const clearEditor = () => {
     if (!refEditor.current?.editor?.data) {
@@ -50,6 +61,7 @@ function App() {
       const rendered = templateFunction(env);
       renderList.push({ [KEY]: env[KEY], rendered });
     });
+    setKeyIndex(-1);
     setRenderList(renderList);
     setEditorState(EditorState.Displaying);
   };
@@ -109,9 +121,20 @@ function App() {
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <div className="menu">
                   <ul className="menu-list">
+                    {renderList.map((render, index) => (
+                      <li key={render[KEY]}>
+                        <a
+                          className={index === keyIndex ? "is-active" : ""}
+                          onClick={() => setKeyIndex(index)}
+                        >
+                          {render[KEY]}
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div style={{ flexGrow: "1" }}>
+                  {renderList[keyIndex]?.rendered}
                 </div>
               </div>
             </div>
