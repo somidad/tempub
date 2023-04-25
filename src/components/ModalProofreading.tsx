@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { EditorState, RenderResult } from "../App";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import readerConfig from "../readerConfig";
 
 type Props = {
   onClose?: () => void;
@@ -15,10 +18,16 @@ export default function ModalProofreading({
   KEY,
 }: Props) {
   const [keyIndex, setKeyIndex] = useState(-1);
+  const refReader = createRef<CKEditor<ClassicEditor>>();
 
   useEffect(() => {
     setKeyIndex(-1);
   }, [editorState]);
+
+  const onChangeKeyIndex = (keyIndex: number) => {
+    setKeyIndex(keyIndex);
+    refReader.current?.editor?.data.set(renderList[keyIndex].rendered);
+  };
 
   const isActive =
     editorState === EditorState.Publishing ||
@@ -64,7 +73,7 @@ export default function ModalProofreading({
                     <li key={(render as any)[KEY]}>
                       <a
                         className={index === keyIndex ? "is-active" : ""}
-                        onClick={() => setKeyIndex(index)}
+                        onClick={() => onChangeKeyIndex(index)}
                       >
                         {(render as any)[KEY]}
                       </a>
@@ -76,12 +85,13 @@ export default function ModalProofreading({
                 <div className="tags">
                   Matched keys: {matchedKeysList[keyIndex]?.join(", ")}
                 </div>
-                <div
-                  className="box content"
-                  dangerouslySetInnerHTML={{
-                    __html: renderList[keyIndex]?.rendered,
-                  }}
-                />
+                <div className="content">
+                  <CKEditor
+                    editor={ClassicEditor}
+                    config={readerConfig}
+                    ref={refReader}
+                  />
+                </div>
               </div>
             </div>
           </div>
