@@ -27,6 +27,7 @@ export default function ModalProofreading({
   const onChangeKeyIndex = (keyIndex: number) => {
     setKeyIndex(keyIndex);
     refReader.current?.editor?.data.set(renderList[keyIndex].rendered);
+    refReader.current?.editor?.enableReadOnlyMode("proofreading");
   };
 
   const isActive =
