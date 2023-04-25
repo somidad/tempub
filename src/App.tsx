@@ -2,7 +2,7 @@ import "./App.css";
 import "bulma/css/bulma.min.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import dot from "dot";
 import editorConfig from "./editorConfig";
 
@@ -22,6 +22,7 @@ const KEY = "key";
 dot.templateSettings.varname = "data";
 
 function App() {
+  const refFile = createRef<HTMLInputElement>();
   const refEditor = createRef<CKEditor<ClassicEditor>>();
   const [envList, setEnvList] = useState<any[]>([
     { key: "Key 0" },
@@ -41,11 +42,38 @@ function App() {
   );
   const [keyIndex, setKeyIndex] = useState(-1);
 
+  useEffect(() => {
+    if (!refFile.current || !refEditor.current?.editor) {
+      return;
+    }
+    refFile.current.addEventListener("change", () => {
+      if (!refFile.current?.files?.length) {
+        return;
+      }
+      const [file] = refFile.current.files;
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        if (typeof reader.result !== "string") {
+          return;
+        }
+        refEditor.current?.editor?.data.set(reader.result);
+      });
+      reader.readAsText(file);
+    });
+  }, [refFile, refEditor]);
+
   const clearEditor = () => {
     if (!refEditor.current?.editor?.data) {
       return;
     }
     refEditor.current.editor.data.set("");
+  };
+
+  const load = () => {
+    if (!refFile.current) {
+      return;
+    }
+    refFile.current.click();
   };
 
   const publish = () => {
@@ -85,19 +113,31 @@ function App() {
   });
   return (
     <div className="App">
-      <div className="navbar">
-        <div className="navbar-menu">
-          <div className="navbar-start">
-            <a className="navbar-item" onClick={clearEditor}>
-              New
-            </a>
-            <a className="navbar-item">Load</a>
-            <a className="navbar-item">Save</a>
-            <a className="navbar-item">Info</a>
-            <a className="navbar-item" onClick={publish}>
-              Publish
-            </a>
-          </div>
+      <div className="field is-grouped">
+        <div className="control">
+          <a className="button is-text" onClick={clearEditor}>
+            New
+          </a>
+        </div>
+        <div className="control">
+          <a className="button is-text" onClick={load}>
+            Load
+          </a>
+          <input type="file" ref={refFile} style={{ display: "none" }} />
+        </div>
+        <div className="control">
+          <input className="input"></input>
+        </div>
+        <div className="control">
+          <a className="button is-text">Save</a>
+        </div>
+        <div className="control">
+          <a className="button is-text">Info</a>
+        </div>
+        <div className="control">
+          <a className="button is-text" onClick={publish}>
+            Publish
+          </a>
         </div>
       </div>
       <div className="content">
