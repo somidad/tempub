@@ -47,10 +47,10 @@ function App() {
       return;
     }
     refFile.current.addEventListener("change", () => {
-      if (!refFile.current?.files?.length) {
+      const file = refFile.current?.files?.[0];
+      if (!file) {
         return;
       }
-      const [file] = refFile.current.files;
       const reader = new FileReader();
       reader.addEventListener("load", () => {
         if (typeof reader.result !== "string") {
