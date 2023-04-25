@@ -3,6 +3,7 @@ import "bulma/css/bulma.min.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { createRef, useEffect, useState } from "react";
+import { saveAs } from "file-saver";
 import dot from "dot";
 import editorConfig from "./editorConfig";
 import ModalProofreading from "./components/ModalProofreading";
@@ -24,6 +25,7 @@ dot.templateSettings.varname = "data";
 
 function App() {
   const refFile = createRef<HTMLInputElement>();
+  const refFilename = createRef<HTMLInputElement>();
   const refEditor = createRef<CKEditor<ClassicEditor>>();
   const [envList, setEnvList] = useState<any[]>([
     { key: "Key 0" },
@@ -76,6 +78,15 @@ function App() {
     refFile.current.click();
   };
 
+  const save = () => {
+    if (!refEditor.current?.editor) {
+      return;
+    }
+    const blob = new Blob([refEditor.current.editor.data.get()]);
+    const name = refFilename.current?.value || "tempub";
+    saveAs(blob, `${name}.html`);
+  };
+
   const publish = () => {
     if (!refEditor.current?.editor?.data) {
       return;
@@ -114,10 +125,12 @@ function App() {
           <input type="file" ref={refFile} style={{ display: "none" }} />
         </div>
         <div className="control">
-          <input className="input"></input>
+          <input className="input" ref={refFilename}></input>
         </div>
         <div className="control">
-          <a className="button is-text">Save</a>
+          <a className="button is-text" onClick={save}>
+            Save
+          </a>
         </div>
         <div className="control">
           <a className="button is-text">Info</a>
