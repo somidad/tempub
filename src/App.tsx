@@ -55,9 +55,12 @@ function App() {
       }
       const reader = new FileReader();
       reader.addEventListener("load", () => {
-        if (typeof reader.result !== "string") {
+        if (!refFilename.current || typeof reader.result !== "string") {
           return;
         }
+        const splitted = file.name.split(".");
+        splitted.pop();
+        refFilename.current.value = splitted.join(".");
         refEditor.current?.editor?.data.set(reader.result);
       });
       reader.readAsText(file);
