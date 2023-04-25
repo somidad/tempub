@@ -5,14 +5,15 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { createRef, useEffect, useState } from "react";
 import dot from "dot";
 import editorConfig from "./editorConfig";
+import ModalProofreading from "./components/ModalProofreading";
 
-enum EditorState {
+export enum EditorState {
   Editing,
   Publishing,
   Displaying,
 }
 
-type RenderResult = {
+export type RenderResult = {
   [KEY]: string;
   rendered: string;
 };
@@ -40,7 +41,6 @@ function App() {
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.Editing
   );
-  const [keyIndex, setKeyIndex] = useState(-1);
 
   useEffect(() => {
     if (!refFile.current || !refEditor.current?.editor) {
@@ -89,7 +89,6 @@ function App() {
       const rendered = templateFunction(env);
       renderList.push({ [KEY]: env[KEY], rendered });
     });
-    setKeyIndex(-1);
     setRenderList(renderList);
     setEditorState(EditorState.Displaying);
   };
@@ -100,17 +99,6 @@ function App() {
     }
   };
 
-  const isModalActive = editorState !== EditorState.Editing ? "is-active" : "";
-
-  const matchedKeysList = renderList.map((render) => {
-    const matchedKeys = renderList
-      .filter(
-        (toFilter) =>
-          toFilter[KEY] !== render[KEY] && toFilter.rendered === render.rendered
-      )
-      .map((toMap) => toMap[KEY]);
-    return matchedKeys;
-  });
   return (
     <div className="App">
       <div className="field is-grouped">
@@ -147,57 +135,12 @@ function App() {
           ref={refEditor}
         />
       </div>
-      <div className={`modal ${isModalActive}`}>
-        <div className="modal-background" onClick={tryCloseModal}></div>
-        {editorState === EditorState.Publishing && (
-          <div className="modal-content">
-            <progress className="progress" max="100"></progress>
-          </div>
-        )}
-        {editorState === EditorState.Displaying && (
-          <div
-            className="modal-card"
-            style={{
-              width: "calc(100vw - 40px)",
-              height: "calc(100vh - 40px)",
-            }}
-          >
-            <div className="modal-card-head">
-              <div className="modal-card-title">Proofreading</div>
-            </div>
-            <div className="modal-card-body">
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <div className="menu">
-                  <ul className="menu-list">
-                    {renderList.map((render, index) => (
-                      <li key={render[KEY]}>
-                        <a
-                          className={index === keyIndex ? "is-active" : ""}
-                          onClick={() => setKeyIndex(index)}
-                        >
-                          {render[KEY]}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div style={{ flexGrow: "1" }}>
-                  <div className="tags">
-                    Matched keys: {matchedKeysList[keyIndex]?.join(", ")}
-                  </div>
-                  <div
-                    className="box content"
-                    dangerouslySetInnerHTML={{
-                      __html: renderList[keyIndex]?.rendered,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="modal-card-foot"></div>
-          </div>
-        )}
-      </div>
+      <ModalProofreading
+        onClose={tryCloseModal}
+        editorState={editorState}
+        renderList={renderList}
+        KEY={KEY}
+      />
     </div>
   );
 }
