@@ -36,15 +36,19 @@ export default function ModalProofreading({
       ? "is-active"
       : "";
 
-  const matchedKeysList = renderList.map((render) => {
-    const matchedKeys = renderList
-      .filter(
-        (toFilter) =>
-          (toFilter as any)[KEY] !== (render as any)[KEY] &&
-          toFilter.rendered === render.rendered
-      )
-      .map((toMap) => (toMap as any)[KEY]);
-    return matchedKeys;
+  const matchedKeyGroupList: number[][] = [];
+  renderList.forEach((render, index) => {
+    const groupIndex = matchedKeyGroupList.findIndex((matchedKeyGroup) => {
+      if (!matchedKeyGroup.length) {
+        return false;
+      }
+      return render.rendered === renderList[matchedKeyGroup[0]].rendered;
+    });
+    if (groupIndex === -1) {
+      matchedKeyGroupList.push([index]);
+    } else {
+      matchedKeyGroupList[groupIndex].push(index);
+    }
   });
 
   return (
@@ -68,24 +72,30 @@ export default function ModalProofreading({
           </div>
           <div className="modal-card-body">
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <div className="menu">
-                <ul className="menu-list">
-                  {renderList.map((render, index) => (
-                    <li key={(render as any)[KEY]}>
-                      <a
-                        className={index === keyIndex ? "is-active" : ""}
-                        onClick={() => onChangeKeyIndex(index)}
-                      >
-                        {(render as any)[KEY]}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              <div className="menu" style={{ minWidth: "160px" }}>
+                {matchedKeyGroupList.map((matchedKeyGroup, index) => (
+                  <>
+                    <div key={index} className="menu-label">
+                      Group {index}
+                    </div>
+                    <ul className="menu-list">
+                      {matchedKeyGroup.map((matchedKey) => (
+                        <li key={(renderList[matchedKey] as any)[KEY]}>
+                          <a
+                            className={
+                              matchedKey === keyIndex ? "is-active" : ""
+                            }
+                            onClick={() => onChangeKeyIndex(matchedKey)}
+                          >
+                            {(renderList[matchedKey] as any)[KEY]}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ))}
               </div>
               <div style={{ flexGrow: "1" }}>
-                <div className="tags">
-                  Matched keys: {matchedKeysList[keyIndex]?.join(", ")}
-                </div>
                 <div className="content">
                   <CKEditor
                     editor={ClassicEditor}
