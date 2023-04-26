@@ -1,7 +1,7 @@
 import "./App.css";
 import "bulma/css/bulma.min.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
 import { createRef, useEffect, useState } from "react";
 import { saveAs } from "file-saver";
 import dot from "dot";

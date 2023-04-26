@@ -1,7 +1,7 @@
 import { createRef, useEffect, useState } from "react";
 import { EditorState, RenderResult } from "../App";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
 import readerConfig from "../readerConfig";
 
 type Props = {
