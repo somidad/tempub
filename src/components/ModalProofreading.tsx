@@ -3,6 +3,7 @@ import { EditorState, RenderResult } from "../App";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
 import readerConfig from "../readerConfig";
+import React from "react";
 
 type Props = {
   onClose?: () => void;
@@ -74,8 +75,8 @@ export default function ModalProofreading({
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div className="menu" style={{ minWidth: "160px" }}>
                 {matchedKeyGroupList.map((matchedKeyGroup, index) => (
-                  <>
-                    <div key={index} className="menu-label">
+                  <React.Fragment key={index}>
+                    <div className="menu-label">
                       Group {index}
                     </div>
                     <ul className="menu-list">
@@ -92,7 +93,7 @@ export default function ModalProofreading({
                         </li>
                       ))}
                     </ul>
-                  </>
+                  </React.Fragment>
                 ))}
               </div>
               <div style={{ flexGrow: "1" }}>
