@@ -9,7 +9,7 @@ export default defineConfig({
   },
   build: {
     commonjsOptions: {
-      include: ['ckeditor5-custom-build/build/ckeditor'],
+    include: [/node_modules/, /ckeditor5-*/],
     },
   },
 })
