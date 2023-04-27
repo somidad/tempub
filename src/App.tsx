@@ -123,7 +123,7 @@ function App() {
         </div>
         <div className="control">
           <a className="button is-text" onClick={load}>
-            Load
+            Load template
           </a>
           <input type="file" ref={refFile} style={{ display: "none" }} />
         </div>
@@ -132,11 +132,11 @@ function App() {
         </div>
         <div className="control">
           <a className="button is-text" onClick={save}>
-            Save
+            Save template
           </a>
         </div>
         <div className="control">
-          <a className="button is-text">Info</a>
+          <a className="button is-text">Load data</a>
         </div>
         <div className="control">
           <a className="button is-text" onClick={publish}>
