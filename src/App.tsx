@@ -26,19 +26,10 @@ dot.templateSettings.varname = "data";
 function App() {
   const refFileTemplate = createRef<HTMLInputElement>();
   const refFilename = createRef<HTMLInputElement>();
+  const refFileData = createRef<HTMLInputElement>();
   const refEditor = createRef<CKEditor<ClassicEditor>>();
-  const [data, setData] = useState<any[]>([
-    { key: "Key 0" },
-    { key: "Key 1" },
-    { key: "Key 2" },
-    { key: "Key 3" },
-    { key: "Key 4" },
-    { key: "Key 5" },
-    { key: "Key 6" },
-    { key: "Key 7" },
-    { key: "Key 8" },
-    { key: "Key 9" },
-  ]);
+  const [metadata, setMetadata] = useState<any>({ key: "key" });
+  const [data, setData] = useState<any[]>([]);
   const [renderList, setRenderList] = useState<RenderResult[]>([]);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.Editing
@@ -47,6 +38,7 @@ function App() {
   useEffect(() => {
     if (
       !refFileTemplate.current ||
+      !refFileData.current ||
       !refEditor.current?.editor
     ) {
       return;
@@ -68,7 +60,23 @@ function App() {
       });
       reader.readAsText(file);
     });
-  }, [refFileTemplate, refEditor]);
+    refFileData.current.addEventListener("change", () => {
+      const file = refFileData.current?.files?.[0];
+      if (!file) {
+        return;
+      }
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        if (typeof reader.result !== "string") {
+          return;
+        }
+        const { metadata, data } = JSON.parse(reader.result);
+        setMetadata(metadata);
+        setData(data);
+      });
+      reader.readAsText(file);
+    });
+  }, [refFileTemplate, refFileData, refEditor]);
 
   const clearEditor = () => {
     if (!refEditor.current?.editor?.data) {
@@ -91,6 +99,10 @@ function App() {
     const blob = new Blob([refEditor.current.editor.data.get()]);
     const name = refFilename.current?.value || "tempub";
     saveAs(blob, `${name}.html`);
+  };
+
+  const loadData = () => {
+    refFileData.current?.click();
   };
 
   const publish = () => {
@@ -147,7 +159,9 @@ function App() {
           </a>
         </div>
         <div className="control">
-          <a className="button is-text">Load data</a>
+          <a className="button is-text" onClick={loadData}>
+            Load data
+          </a>
         </div>
         <div className="control">
           <a className="button is-text" onClick={publish}>
