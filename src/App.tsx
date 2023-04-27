@@ -19,7 +19,6 @@ export type RenderResult = {
   rendered: string;
 };
 
-// TODO: Make these configurable
 dot.templateSettings.varname = "data";
 
 function App() {
@@ -71,6 +70,7 @@ function App() {
         }
         const { metadata, data } = JSON.parse(reader.result);
         setMetadata(metadata);
+        dot.templateSettings.varname = metadata.varname || "data";
         setDataList(data);
       });
       reader.readAsText(file);
