@@ -8,6 +8,7 @@ export default defineConfig({
     include: ['ckeditor5-custom-build/build/ckeditor'],
   },
   build: {
+    outDir: 'docs',
     commonjsOptions: {
     include: [/node_modules/, /ckeditor5-*/],
     },
