@@ -12,7 +12,7 @@ Templated document publishing
 
 ## To dos
 
-- [ ] Image upload (base64)
+- [x] Image upload (base64)
 - [ ] Copy formatted
 - [ ] Highlight template delimiters
 
