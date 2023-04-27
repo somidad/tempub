@@ -15,6 +15,7 @@ Templated document publishing
 - [x] Load data for templating
 - [x] Image upload (base64)
 - [ ] Check validity of data
+- [ ] Template delimiters usage
 - [ ] Copy formatted
 - [ ] Highlight template delimiters
 
