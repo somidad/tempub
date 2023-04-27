@@ -161,6 +161,7 @@ function App() {
           <a className="button is-text" onClick={loadData}>
             Load data
           </a>
+          <input type="file" ref={refFileData} style={{ display: "none" }} />
         </div>
         <div className="control">
           <a className="button is-text" onClick={publish}>
