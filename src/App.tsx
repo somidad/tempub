@@ -114,7 +114,10 @@ function App() {
 
     const renderList: RenderResult[] = [];
     dataList.forEach((data) => {
-      const rendered = templateFunction(data);
+      const rendered = templateFunction(data).replaceAll(
+        /(<p>(&nbsp;)*<\/p>[\r\n]*)+/gm,
+        "<p></p>"
+      );
       renderList.push({ key: data[metadata.key], rendered });
     });
     setRenderList(renderList);
