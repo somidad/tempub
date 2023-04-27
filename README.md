@@ -12,10 +12,11 @@ Templated document publishing
 
 ## To dos
 
+- [x] Load data for templating
 - [x] Image upload (base64)
+- [ ] Check validity of data
 - [ ] Copy formatted
 - [ ] Highlight template delimiters
-- [ ] Load data for templating
 
 ## Stacks used
 
