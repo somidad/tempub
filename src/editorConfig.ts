@@ -1,6 +1,67 @@
 import type { EditorConfig } from "@ckeditor/ckeditor5-core";
 
-const editorConfig: EditorConfig = {
+interface TextTransformationDescription {
+  from: string | RegExp;
+  to:
+    | string
+    | Array<null | string>
+    | ((arr: Array<string>) => Array<null | string>);
+}
+
+interface TextTransformationConfig {
+  extra?: Array<string | TextTransformationDescription>;
+  include?: Array<string | TextTransformationDescription>;
+  remove?: Array<string | TextTransformationDescription>;
+}
+
+interface TypingConfig {
+  transformations: TextTransformationConfig;
+  undoStep?: number;
+}
+
+type HeadingOption = HeadingElementOption | HeadingParagraphOption;
+
+interface ElementObjectDefinition {
+  attributes?: Record<string, string>;
+  classes?: string | Array<string>;
+  name: string;
+  priority?: number;
+  styles?: Record<string, string>;
+}
+
+type ElementDefinition = string | ElementObjectDefinition;
+
+interface HeadingElementOption {
+  class: string;
+  icon?: string;
+  model:
+    | "heading1"
+    | "heading2"
+    | "heading3"
+    | "heading4"
+    | "heading5"
+    | "heading6";
+  title: string;
+  view: ElementDefinition;
+}
+
+interface HeadingParagraphOption {
+  class: string;
+  icon?: string;
+  model: "paragraph";
+  title: string;
+}
+
+interface HeadingConfig {
+  options?: Array<HeadingOption>;
+}
+
+interface FixedEditorConfig extends EditorConfig {
+  typing?: TypingConfig;
+  heading?: HeadingConfig;
+}
+
+const editorConfig: FixedEditorConfig = {
   typing: {
     transformations: {
       include: [],
