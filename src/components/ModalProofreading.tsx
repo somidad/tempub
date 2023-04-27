@@ -9,14 +9,12 @@ type Props = {
   onClose?: () => void;
   editorState?: EditorState;
   renderList: RenderResult[];
-  KEY: string;
 };
 
 export default function ModalProofreading({
   onClose,
   editorState,
   renderList,
-  KEY,
 }: Props) {
   const [keyIndex, setKeyIndex] = useState(-1);
   const refReader = createRef<CKEditor<ClassicEditor>>();
@@ -76,19 +74,17 @@ export default function ModalProofreading({
               <div className="menu" style={{ minWidth: "160px" }}>
                 {matchedKeyGroupList.map((matchedKeyGroup, index) => (
                   <React.Fragment key={index}>
-                    <div className="menu-label">
-                      Group {index}
-                    </div>
+                    <div className="menu-label">Group {index}</div>
                     <ul className="menu-list">
                       {matchedKeyGroup.map((matchedKey) => (
-                        <li key={(renderList[matchedKey] as any)[KEY]}>
+                        <li key={renderList[matchedKey].key}>
                           <a
                             className={
                               matchedKey === keyIndex ? "is-active" : ""
                             }
                             onClick={() => onChangeKeyIndex(matchedKey)}
                           >
-                            {(renderList[matchedKey] as any)[KEY]}
+                            {renderList[matchedKey].key}
                           </a>
                         </li>
                       ))}

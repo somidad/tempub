@@ -15,12 +15,11 @@ export enum EditorState {
 }
 
 export type RenderResult = {
-  [KEY]: string;
+  key: string;
   rendered: string;
 };
 
 // TODO: Make these configurable
-const KEY = "key";
 dot.templateSettings.varname = "data";
 
 function App() {
@@ -29,7 +28,7 @@ function App() {
   const refFileData = createRef<HTMLInputElement>();
   const refEditor = createRef<CKEditor<ClassicEditor>>();
   const [metadata, setMetadata] = useState<any>({ key: "key" });
-  const [data, setData] = useState<any[]>([]);
+  const [dataList, setDataList] = useState<any[]>([]);
   const [renderList, setRenderList] = useState<RenderResult[]>([]);
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.Editing
@@ -72,7 +71,7 @@ function App() {
         }
         const { metadata, data } = JSON.parse(reader.result);
         setMetadata(metadata);
-        setData(data);
+        setDataList(data);
       });
       reader.readAsText(file);
     });
@@ -114,9 +113,9 @@ function App() {
     const templateFunction = dot.template(template);
 
     const renderList: RenderResult[] = [];
-    data.forEach((env) => {
-      const rendered = templateFunction(env);
-      renderList.push({ [KEY]: env[KEY], rendered });
+    dataList.forEach((data) => {
+      const rendered = templateFunction(data);
+      renderList.push({ key: data[metadata.key], rendered });
     });
     setRenderList(renderList);
     setEditorState(EditorState.Displaying);
@@ -180,7 +179,6 @@ function App() {
         onClose={tryCloseModal}
         editorState={editorState}
         renderList={renderList}
-        KEY={KEY}
       />
     </div>
   );
