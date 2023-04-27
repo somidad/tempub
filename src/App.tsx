@@ -128,7 +128,11 @@ function App() {
           <input type="file" ref={refFile} style={{ display: "none" }} />
         </div>
         <div className="control">
-          <input className="input" ref={refFilename}></input>
+          <input
+            className="input"
+            ref={refFilename}
+            placeholder="tempub"
+          ></input>
         </div>
         <div className="control">
           <a className="button is-text" onClick={save}>
