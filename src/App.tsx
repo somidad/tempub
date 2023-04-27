@@ -24,7 +24,7 @@ const KEY = "key";
 dot.templateSettings.varname = "data";
 
 function App() {
-  const refFile = createRef<HTMLInputElement>();
+  const refFileTemplate = createRef<HTMLInputElement>();
   const refFilename = createRef<HTMLInputElement>();
   const refEditor = createRef<CKEditor<ClassicEditor>>();
   const [data, setData] = useState<any[]>([
@@ -45,11 +45,14 @@ function App() {
   );
 
   useEffect(() => {
-    if (!refFile.current || !refEditor.current?.editor) {
+    if (
+      !refFileTemplate.current ||
+      !refEditor.current?.editor
+    ) {
       return;
     }
-    refFile.current.addEventListener("change", () => {
-      const file = refFile.current?.files?.[0];
+    refFileTemplate.current.addEventListener("change", () => {
+      const file = refFileTemplate.current?.files?.[0];
       if (!file) {
         return;
       }
@@ -65,7 +68,7 @@ function App() {
       });
       reader.readAsText(file);
     });
-  }, [refFile, refEditor]);
+  }, [refFileTemplate, refEditor]);
 
   const clearEditor = () => {
     if (!refEditor.current?.editor?.data) {
@@ -74,14 +77,14 @@ function App() {
     refEditor.current.editor.data.set("");
   };
 
-  const load = () => {
-    if (!refFile.current) {
+  const loadTemplate = () => {
+    if (!refFileTemplate.current) {
       return;
     }
-    refFile.current.click();
+    refFileTemplate.current.click();
   };
 
-  const save = () => {
+  const saveTemplate = () => {
     if (!refEditor.current?.editor) {
       return;
     }
@@ -122,10 +125,14 @@ function App() {
           </a>
         </div>
         <div className="control">
-          <a className="button is-text" onClick={load}>
+          <a className="button is-text" onClick={loadTemplate}>
             Load template
           </a>
-          <input type="file" ref={refFile} style={{ display: "none" }} />
+          <input
+            type="file"
+            ref={refFileTemplate}
+            style={{ display: "none" }}
+          />
         </div>
         <div className="control">
           <input
@@ -135,7 +142,7 @@ function App() {
           ></input>
         </div>
         <div className="control">
-          <a className="button is-text" onClick={save}>
+          <a className="button is-text" onClick={saveTemplate}>
             Save template
           </a>
         </div>
