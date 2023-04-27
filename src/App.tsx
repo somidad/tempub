@@ -27,7 +27,7 @@ function App() {
   const refFile = createRef<HTMLInputElement>();
   const refFilename = createRef<HTMLInputElement>();
   const refEditor = createRef<CKEditor<ClassicEditor>>();
-  const [envList, setEnvList] = useState<any[]>([
+  const [data, setData] = useState<any[]>([
     { key: "Key 0" },
     { key: "Key 1" },
     { key: "Key 2" },
@@ -99,7 +99,7 @@ function App() {
     const templateFunction = dot.template(template);
 
     const renderList: RenderResult[] = [];
-    envList.forEach((env) => {
+    data.forEach((env) => {
       const rendered = templateFunction(env);
       renderList.push({ [KEY]: env[KEY], rendered });
     });
