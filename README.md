@@ -15,6 +15,7 @@ Templated document publishing
 - [x] Image upload (base64)
 - [ ] Copy formatted
 - [ ] Highlight template delimiters
+- [ ] Load data for templating
 
 ## Stacks used
 
