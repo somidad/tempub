@@ -10,6 +10,26 @@ Templated document publishing
 - Conditional templating
 - Preview with grouping
 
+## Usage
+
+### Format of data
+
+```json
+{
+  "metadata": {
+    "key": "key",
+    "varname": "data"
+  },
+  "data": [
+    {
+      "key": "key 1",
+      "property 1": true,
+      "property 2": 99
+    }
+  ]
+}
+```
+
 ## To dos
 
 - [x] Load data for templating
