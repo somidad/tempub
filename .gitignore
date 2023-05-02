@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Custom build CKEditor5
+ckeditor5*/**/translations
+ckeditor5*/**/sample
