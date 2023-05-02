@@ -118,7 +118,7 @@ function App() {
         /(<p>(&nbsp;)*<\/p>[\r\n]*)+/gm,
         "<p></p>"
       );
-      renderList.push({ key: data[metadata.key], rendered });
+      renderList.push({ key: data[metadata.key || "key"], rendered });
     });
     setRenderList(renderList);
     setEditorState(EditorState.Displaying);
