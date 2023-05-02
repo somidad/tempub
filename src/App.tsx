@@ -26,7 +26,10 @@ function App() {
   const refFilename = createRef<HTMLInputElement>();
   const refFileData = createRef<HTMLInputElement>();
   const refEditor = createRef<CKEditor<ClassicEditor>>();
-  const [metadata, setMetadata] = useState<any>({ key: "key" });
+  const [metadata, setMetadata] = useState<any>({
+    key: "key",
+    varname: "data",
+  });
   const [dataList, setDataList] = useState<any[]>([]);
   const [renderList, setRenderList] = useState<RenderResult[]>([]);
   const [editorState, setEditorState] = useState<EditorState>(
@@ -69,7 +72,7 @@ function App() {
           return;
         }
         const { metadata, data } = JSON.parse(reader.result);
-        setMetadata(metadata);
+        setMetadata(metadata ?? { key: "key", varname: "data" });
         dot.templateSettings.varname = metadata.varname || "data";
         setDataList(data);
       });
