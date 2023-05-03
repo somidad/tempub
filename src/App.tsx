@@ -112,7 +112,9 @@ function App() {
       return;
     }
     setEditorState(EditorState.Publishing);
-    const template = refEditor.current.editor.data.get();
+    const template = refEditor.current.editor.data
+      .get()
+      .replaceAll("&amp;&amp;", "&&");
     const templateFunction = dot.template(template);
 
     const renderList: RenderResult[] = [];
