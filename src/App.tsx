@@ -72,7 +72,7 @@ function App() {
           return;
         }
         const { metadata, data } = JSON.parse(reader.result);
-        setMetadata(metadata ?? { key: "key", varname: "data" });
+        setMetadata({ key: "key", varname: "data", ...(metadata ?? {}) });
         dot.templateSettings.varname = metadata.varname || "data";
         setDataList(data);
       });
